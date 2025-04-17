@@ -16,8 +16,8 @@ class JobDescriptionProcessor:
 
     def process(self) -> bool:
         try:
-            resume_dict = self._read_resumes()
-            self._write_json_file(resume_dict)
+            job_desc_dict = self._read_job_desc()
+            self._write_json_file(job_desc_dict)
             return True
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -29,8 +29,11 @@ class JobDescriptionProcessor:
         return output
 
     def _read_job_desc(self) -> dict:
-        data = read_single_pdf(self.input_file_name)
-        output = ParseJobDesc(data).get_JSON()
+        # Read the job description text file directly
+        with open(self.input_file_name, 'r', encoding='utf-8') as f:
+            job_desc_text = f.read()
+        # Process the text using ParseJobDesc
+        output = ParseJobDesc(job_desc_text).get_JSON()
         return output
 
     def _write_json_file(self, resume_dictionary: dict):

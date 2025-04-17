@@ -18,36 +18,34 @@ logger.setLevel(logging.INFO)
 
 def find_path(folder_name):
     """
-    The function `find_path` searches for a folder by name starting from the current directory and
-    traversing up the directory tree until the folder is found or the root directory is reached.
+    Find the path of a folder with the given name in the current directory or its parent directories.
 
     Args:
-      folder_name: The `find_path` function you provided is designed to search for a folder by name
-    starting from the current working directory and moving up the directory tree until it finds the
-    folder or reaches the root directory.
+        folder_name (str): The name of the folder to search for.
 
     Returns:
-      The `find_path` function is designed to search for a folder with the given `folder_name` starting
-    from the current working directory (`os.getcwd()`). It iterates through the directory structure,
-    checking if the folder exists in the current directory or any of its parent directories. If the
-    folder is found, it returns the full path to that folder using `os.path.join(curr_dir, folder_name)`
+        str: The path of the folder if found.
+
+    Raises:
+        ValueError: If the folder with the given name is not found in the current directory or its parent directories.
     """
+    # In Docker, we're already in the app directory
     curr_dir = os.getcwd()
-    while True:
-        if folder_name in os.listdir(curr_dir):
-            return os.path.join(curr_dir, folder_name)
-        else:
-            parent_dir = os.path.dirname(curr_dir)
-            if parent_dir == "/":
-                break
-            curr_dir = parent_dir
-    raise ValueError(f"Folder '{folder_name}' not found.")
+    if folder_name in os.listdir(curr_dir):
+        return os.path.join(curr_dir, folder_name)
+    # If not found, return the current directory since we're already in the app directory
+    return curr_dir
 
 
 cwd = find_path("Resume-Matcher")
 READ_RESUME_FROM = os.path.join(cwd, "Data", "Processed", "Resumes")
 READ_JOB_DESCRIPTION_FROM = os.path.join(cwd, "Data", "Processed", "JobDescription")
 config_path = os.path.join(cwd, "scripts", "similarity")
+
+# Ensure directories exist
+os.makedirs(READ_RESUME_FROM, exist_ok=True)
+os.makedirs(READ_JOB_DESCRIPTION_FROM, exist_ok=True)
+os.makedirs(config_path, exist_ok=True)
 
 
 def read_config(filepath):

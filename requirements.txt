@@ -61,7 +61,7 @@ pyparsing==3.0.9
 pypdf==3.17.0
 pyphen==0.14.0
 python-dateutil==2.8.2
-python-multipart==0.0.18
+python-multipart==0.0.6
 pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 PyYAML==6.0
@@ -98,12 +98,11 @@ threadpoolctl==3.2.0
 toml==0.10.2
 toolz==0.12.0
 tornado==6.4.2
-tqdm
+typing-extensions>=4.8.0
 typer==0.9.0
-typing_extensions==4.7.1
 tzdata==2023.3
 tzlocal==4.3.1
-uvicorn==0.23.2
+uvicorn==0.24.0
 urllib3>=1.26.14
 validators==0.20.0
 wasabi==1.1.2
@@ -114,3 +113,4 @@ easygui==0.98.3
 xhtml2pdf==0.2.11
 fastembed~=0.2.2
 qdrant-client==1.9.0
+fastapi==0.104.1
