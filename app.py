@@ -108,7 +108,15 @@ async def match_resume_job(
         jd_keywords_set = {kw.lower().strip() for kw in jd_keywords}
         common_keywords = list(resume_keywords_set & jd_keywords_set)
         
+        # Find keywords that are in resume but not in job description
+        resume_only_keywords = list(resume_keywords_set - jd_keywords_set)
+        
+        # Find keywords that are in job description but not in resume
+        jd_only_keywords = list(jd_keywords_set - resume_keywords_set)
+        
         print(f"Common keywords found: {common_keywords}")
+        print(f"Resume-only keywords: {resume_only_keywords}")
+        print(f"Job description-only keywords: {jd_only_keywords}")
         
         # Clean up temporary files
         os.remove(resume_path)
@@ -118,7 +126,9 @@ async def match_resume_job(
         
         return {
             "similarity_score": similarity_score,
-            "common_keywords": common_keywords
+            "common_keywords": common_keywords,
+            "resume_only_keywords": resume_only_keywords,
+            "job_description_only_keywords": jd_only_keywords
         }
         
     except Exception as e:
